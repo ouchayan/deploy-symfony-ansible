@@ -1,0 +1,7 @@
+---
+ansible_user: ubuntu
+ansible_ssh_private_key_file: /Applications/ansistrano.pem
+ansible_python_interpreter: /usr/bin/python3
+host_server_name: ansistratio.example.com
+ansible_env: prod
+env: prod

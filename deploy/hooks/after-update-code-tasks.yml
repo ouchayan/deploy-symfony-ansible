@@ -1,0 +1,44 @@
+---
+- name: Copy content of directory 'files'
+  copy:
+    src: '{{ ansistrano_release_path.stdout }}/user_ihm/'
+    dest: '{{ ansistrano_release_path.stdout }}/'
+    remote_src : yes 
+
+- name: Remove debian, outilsSTR, patches and scripts
+  file:
+    path: '{{ ansistrano_release_path.stdout }}/{{ item }}'
+    state: absent
+  with_items:
+    - folder1
+    - folder2
+    - folder3
+    - folder4
+    - folder5
+
+- name: Remove sensitive scripts from web/ dir
+  file:
+    path: '{{ release_web_path }}/{{ item }}'
+    state: absent
+  with_items:
+    - app_dev.php
+    - config.php
+
+- name: Remove parameters file
+  file:
+    path: '{{ release_config_path }}/{{ item }}'
+    state: absent
+  with_items:
+    - parameters.yml
+
+- name: Setup directory permissions for app/logs
+  file:
+    path: "{{ release_logs_path }}"
+    state: directory
+    mode: 0777
+
+- name: Setup directory permissions for app/cache
+  file:
+    path: "{{ release_cache_path }}/*"
+    state: directory
+    mode: 0777

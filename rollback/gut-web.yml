@@ -1,0 +1,13 @@
+---
+- name: Rollabck gut web application
+  hosts: servername
+
+  vars_files:
+    - ../environments/{{ env }}/vars/vars.yml
+
+  vars:
+    # Ansistrano vars
+    ansistrano_deploy_to: "{{ project_deploy_dir }}" # Base path to deploy to.
+
+  roles:
+    - ansistrano.rollback

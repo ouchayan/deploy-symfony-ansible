@@ -1,0 +1,14 @@
+---
+- name: Set up infrastructure-related parameters
+  template:
+    src: '{{ playbook_dir }}/../templates/parameters.yml.dist'
+    dest: '{{ release_config_path }}/parameters.yml'
+
+- name: Clear the cache
+  command: '{{ release_console_path }} cache:clear --no-warmup --env={{ env }}'
+  
+- name: Warm up the cache
+  command: '{{ release_console_path }} cache:warmup --env={{ env }}'
+
+- name: Create DB if not exists
+  command: '{{ release_console_path }} doctrine:database:create --if-not-exists --env={{ env }}'
